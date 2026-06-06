@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Deep Learning",
+    "coef": 3,
+    "hasTP": true,
+    "hasTD": false
+  },
+  {
+    "name": "Méthod de conception avancées",
+    "coef": 2,
+    "hasTP": false,
+    "hasTD": true
+  },
+  {
+    "name": "Optimization et métaheuristiques",
+    "coef": 3,
+    "hasTP": true,
+    "hasTD": false
+  },
+  {
+    "name": "Processus stochastiques",
+    "coef": 2,
+    "hasTP": false,
+    "hasTD": true
+  },
+  {
+    "name": "Algorithmique avancée et complexité",
+    "coef": 2,
+    "hasTP": true,
+    "hasTD": false
+  },
+  {
+    "name": "Calcul haute performance",
+    "coef": 2,
+    "hasTP": true,
+    "hasTD": false
+  },
+  {
+    "name": "WEB avancé et micro-services",
+    "coef": 2,
+    "hasTP": true,
+    "hasTD": false
+  },
+  {
+    "name": "Séminaire et Workshops",
+    "coef": 1,
+    "hasTP": false,
+    "hasTD": false
+  }
+]

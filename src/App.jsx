@@ -1,120 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+
+import classes_data from "./assets/classes.json" with { type: "json" }
+import { Semester } from "./models/Semester.js"
+import { Class } from "./models/Class.js"
+
+import React, { useState } from 'react'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  let [semester, setSemester] = useState(() =>
+    new Semester(classes_data.map(({ name, coef, hasTP, hasTD }) => new Class({ name, coef, hasTP, hasTD })))
+  )
+
+  const onChange = (e) => {
+    let [gradeType, ...identifier] = e.target.id.split("-")
+    console.log(`before ${identifier}`)
+    identifier = identifier.join("-")
+    console.log(`after ${identifier}`)
+    setSemester(semester.mutateClass(identifier, gradeType, e.target.value))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    Array.from(semester.classes.values()).forEach(c => console.log(`${c}`))
+  }
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      <form onSubmit={handleSubmit}>
+        {
+          Array.from(semester.classes.values()).map(c => (
+            <React.Fragment key={c.identifier}>
+              <p><b>{c.name}</b></p>
 
-      <div className="ticks"></div>
+              <label htmlFor={`exam-${c.identifier}`}>Exam:</label>
+              <input
+                type="number"
+                step="any"
+                id={`exam-${c.identifier}`}
+                value={c.grade.exam ?? ""}
+                onChange={onChange}
+              />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+              {(c.hasTP && <>
+                <label htmlFor={`tp-${c.identifier}`}>TP:</label>
+                <input
+                  type="number"
+                  step="any"
+                  id={`tp-${c.identifier}`}
+                  value={c.grade.tp ?? ""}
+                  onChange={onChange}
+                />
+              </>)}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+              {(c.hasTD && <>
+                <label htmlFor={`td-${c.identifier}`}>TD:</label>
+                <input
+                  type="number"
+                  step="any"
+                  id={`td-${c.identifier}`}
+                  value={c.grade.td ?? ""}
+                  onChange={onChange}
+                />
+              </>)}
+
+            </React.Fragment>
+          ))
+        }
+
+        <output name="average">0.0</output>
+        <button type="submit">Compute</button>
+      </form>
     </>
   )
 }
