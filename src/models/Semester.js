@@ -1,8 +1,10 @@
 
 export class Semester {
   constructor(courses) {
-    this.courses = new Map()
-    courses?.forEach(m => this.courses.set(m.identifier, m))
+    if (courses !== undefined) {
+      this.courses = new Map()
+      courses.forEach(c => this.courses.set(c.identifier, c))
+    }
   }
 
   toString() {
