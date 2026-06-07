@@ -32,7 +32,8 @@ export class Grade {
         case COURSE_TYPE.TD_TP:
           return throwIfNull(this.exam) * 0.6 + ((throwIfNull(this.tp) + throwIfNull(this.td)) / 2) * 0.4
       }
-    } catch {
+    } catch (e) {
+      //      throw Error(JSON.stringify({ "type": this.type }) + "\n" + e.toString())
       throw Error(JSON.stringify({ "type": this.type }))
     }
   }

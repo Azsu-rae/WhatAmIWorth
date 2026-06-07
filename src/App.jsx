@@ -11,17 +11,17 @@ function App() {
     new Semester(classes_data.map(({ name, coef, hasTP, hasTD }) => new Class(name, coef, hasTP, hasTD)))
   )
 
+  let [average, setAverage] = useState(0.0)
+
   const onChange = (e) => {
     let [gradeType, ...identifier] = e.target.id.split("-")
-    console.log(`before ${identifier}`)
     identifier = identifier.join("-")
-    console.log(`after ${identifier}`)
     setSemester(semester.mutateClass(identifier, gradeType, e.target.value))
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    Array.from(semester.classes.values()).forEach(c => console.log(`${c}`))
+    setAverage(semester.average())
   }
 
   return (
@@ -67,7 +67,7 @@ function App() {
           ))
         }
 
-        <output name="average">0.0</output>
+        <output name="average">{average}</output>
         <button type="submit">Compute</button>
       </form>
     </>
