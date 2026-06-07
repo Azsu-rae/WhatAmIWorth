@@ -1,7 +1,6 @@
 
 import { Grade } from "./Grade.js"
 
-
 export const COURSE_TYPE = Object.freeze({
   TD_TP: "both",
   TD: "td",
@@ -21,8 +20,7 @@ function type(hasTD, hasTP) {
   }
 }
 
-
-export class Class {
+export class Course {
   constructor(name, coef, hasTP, hasTD) {
 
     this.name = name

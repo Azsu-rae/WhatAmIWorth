@@ -1,14 +1,14 @@
 
 import { Semester } from "../src/models/Semester.js";
-import { Class } from "../src/models/Class.js";
+import { Course } from "../src/models/Course.js";
 
-import classes_data from "../src/assets/classes.json" with {type: "json"}
+import courses_data from "../src/assets/courses.json" with {type: "json"}
 import test_data from "./assets/my_s8.json" with {type: "json"}
 
-let semester = new Semester(classes_data.map(({ name, coef, hasTP, hasTD }) => new Class(name, coef, hasTP, hasTD)))
-Object.keys(test_data).forEach(identifier => {
-  Object.keys(test_data[identifier]).forEach(gradeType => {
-    semester.mutateClass(identifier, gradeType, test_data[identifier][gradeType])
+let semester = new Semester(courses_data.map(({ name, coef, hasTP, hasTD }) => new Course(name, coef, hasTP, hasTD)))
+Object.keys(test_data).forEach(courseIdentifier => {
+  Object.keys(test_data[courseIdentifier]).forEach(gradeType => {
+    semester.mutateCourseGrade(courseIdentifier, gradeType, test_data[courseIdentifier][gradeType])
   })
 })
 

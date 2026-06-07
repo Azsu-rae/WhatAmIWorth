@@ -1,9 +1,10 @@
 
-import { COURSE_TYPE } from "./Class.js"
+import { COURSE_TYPE } from "./Course.js"
 
 function throwIfNull(object) {
-  if (object == null) { throw new Error("Attempting to compute the grade without passing all of the fields") }
-  return object
+  if (object == null) {
+    throw new Error("Attempting to compute the grade without passing all of the fields")
+  } return object
 }
 
 export class Grade {
@@ -21,20 +22,15 @@ export class Grade {
   }
 
   compute() {
-    try {
-      switch (this.type) {
-        case COURSE_TYPE.EXAM_ONLY:
-          return throwIfNull(this.exam)
-        case COURSE_TYPE.TD:
-          return throwIfNull(this.exam) * 0.6 + throwIfNull(this.td) * 0.4
-        case COURSE_TYPE.TP:
-          return throwIfNull(this.exam) * 0.6 + throwIfNull(this.tp) * 0.4
-        case COURSE_TYPE.TD_TP:
-          return throwIfNull(this.exam) * 0.6 + ((throwIfNull(this.tp) + throwIfNull(this.td)) / 2) * 0.4
-      }
-    } catch (e) {
-      //      throw Error(JSON.stringify({ "type": this.type }) + "\n" + e.toString())
-      throw Error(JSON.stringify({ "type": this.type }))
+    switch (this.type) {
+      case COURSE_TYPE.EXAM_ONLY:
+        return throwIfNull(this.exam)
+      case COURSE_TYPE.TD:
+        return throwIfNull(this.exam) * 0.6 + throwIfNull(this.td) * 0.4
+      case COURSE_TYPE.TP:
+        return throwIfNull(this.exam) * 0.6 + throwIfNull(this.tp) * 0.4
+      case COURSE_TYPE.TD_TP:
+        return throwIfNull(this.exam) * 0.6 + ((throwIfNull(this.tp) + throwIfNull(this.td)) / 2) * 0.4
     }
   }
 
@@ -46,7 +42,7 @@ export class Grade {
     } else if (type === "tp") {
       this.tp = value
     } else {
-      throw new Error(`operation = ${type} WTF??`)
+      throw new Error(`gradeType=${type} is not a valid grade type!`)
     }
   }
 }

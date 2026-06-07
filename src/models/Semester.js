@@ -1,14 +1,18 @@
 
 export class Semester {
-  constructor(classes) {
-    this.classes = new Map()
-    classes?.forEach(m => this.classes.set(m.identifier, m))
+  constructor(courses) {
+    this.courses = new Map()
+    courses?.forEach(m => this.courses.set(m.identifier, m))
+  }
+
+  toString() {
+    return Array.from(this.courses.values()).map(c => c.toString()).join("\n\n")
   }
 
   average() {
 
     let sum = 0, totalWeights = 0
-    this.classes.forEach(c => {
+    this.courses.forEach(c => {
       sum += c.weightedGrade()
       totalWeights += c.coef
     })
@@ -16,25 +20,15 @@ export class Semester {
     return sum / totalWeights
   }
 
-  mutateClass(identifier, gradeType, value) {
+  mutateCourseGrade(courseIdentifier, gradeType, value) {
 
-    value = (value === "") ? null : parseFloat(value)
-
-    let mod = this.classes.get(identifier)
-    if (mod == null) {
-      console.log(identifier)
-      throw Error("somth's wrong")
-    }
-
-    mod.grade.set(gradeType, value)
+    let course = this.courses.get(courseIdentifier)
+    if (course == null) {
+      throw new Error(`identifier=${courseIdentifier} is not present amongst the courses`)
+    } course.grade.set(gradeType, value)
 
     let copy = new Semester()
-    copy.classes = this.classes
+    copy.courses = this.courses
     return copy
   }
-
-  toString() {
-    return Array.from(this.classes.values()).map(c => c.toString()).join("\n\n")
-  }
 }
-

@@ -1,34 +1,40 @@
 
-import classes_data from "./assets/classes.json" with { type: "json" }
+import courses_data from "./assets/courses.json" with { type: "json" }
 import { Semester } from "./models/Semester.js"
-import { Class } from "./models/Class.js"
+import { Course } from "./models/Course.js"
 
 import React, { useState } from 'react'
+
+import './App.css'
 
 function App() {
 
   let [semester, setSemester] = useState(() =>
-    new Semester(classes_data.map(({ name, coef, hasTP, hasTD }) => new Class(name, coef, hasTP, hasTD)))
+    new Semester(courses_data.map(({ name, coef, hasTP, hasTD }) => new Course(name, coef, hasTP, hasTD)))
   )
 
   let [average, setAverage] = useState(0.0)
 
   const onChange = (e) => {
+    let value = e.target.value === "" ? null : parseFloat(e.target.value)
     let [gradeType, ...identifier] = e.target.id.split("-")
-    identifier = identifier.join("-")
-    setSemester(semester.mutateClass(identifier, gradeType, e.target.value))
+    setSemester(semester.mutateCourseGrade(identifier.join("-"), gradeType, value))
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setAverage(semester.average())
+    try {
+      setAverage(semester.average())
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (
     <>
       <form onSubmit={handleSubmit}>
         {
-          Array.from(semester.classes.values()).map(c => (
+          Array.from(semester.courses.values()).map(c => (
             <React.Fragment key={c.identifier}>
               <p><b>{c.name}</b></p>
 
@@ -62,7 +68,6 @@ function App() {
                   onChange={onChange}
                 />
               </>)}
-
             </React.Fragment>
           ))
         }
