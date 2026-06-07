@@ -8,7 +8,7 @@ import React, { useState } from 'react'
 function App() {
 
   let [semester, setSemester] = useState(() =>
-    new Semester(classes_data.map(({ name, coef, hasTP, hasTD }) => new Class({ name, coef, hasTP, hasTD })))
+    new Semester(classes_data.map(({ name, coef, hasTP, hasTD }) => new Class(name, coef, hasTP, hasTD)))
   )
 
   const onChange = (e) => {

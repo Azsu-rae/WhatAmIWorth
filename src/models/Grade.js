@@ -1,13 +1,19 @@
 
-export class Grade {
-  constructor({ hasTP, hasTD }, { exam, td, tp } = {}) {
+import { COURSE_TYPE } from "./Class.js"
 
-    this.hasTP = hasTP
-    this.hasTD = hasTD
+function throwIfNull(object) {
+  if (object == null) { throw new Error("Attempting to compute the grade without passing all of the fields") }
+  return object
+}
+
+export class Grade {
+  constructor(type, { exam, td, tp } = {}) {
 
     this.exam = exam
     this.tp = tp
     this.td = td
+
+    this.type = type
   }
 
   toString() {
@@ -15,29 +21,23 @@ export class Grade {
   }
 
   compute() {
-
-    if (!this.hasTD && !this.hasTP) {
-      return this.exam;
+    try {
+      switch (this.type) {
+        case COURSE_TYPE.EXAM_ONLY:
+          return throwIfNull(this.exam)
+        case COURSE_TYPE.TD:
+          return throwIfNull(this.exam) * 0.6 + throwIfNull(this.td) * 0.4
+        case COURSE_TYPE.TP:
+          return throwIfNull(this.exam) * 0.6 + throwIfNull(this.tp) * 0.4
+        case COURSE_TYPE.TD_TP:
+          return throwIfNull(this.exam) * 0.6 + ((throwIfNull(this.tp) + throwIfNull(this.td)) / 2) * 0.4
+      }
+    } catch {
+      throw Error(JSON.stringify({ "type": this.type }))
     }
-
-    let cc;
-    if (this.hasTD !== this.hasTP) {
-      cc = this.hasTD ? this.td : this.tp;
-    } else if (this.td == null || this.tp == null) {
-      cc = null
-    } else {
-      cc = (this.td + this.tp) / 2
-    }
-
-    if (cc == null || this.exam == null) {
-      return null
-    }
-
-    return this.exam * 0.6 + cc * 0.4
   }
 
   set(type, value) {
-
     if (type === "exam") {
       this.exam = value
     } else if (type === "td") {
@@ -49,4 +49,3 @@ export class Grade {
     }
   }
 }
-
