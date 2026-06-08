@@ -22,12 +22,14 @@ export class Semester {
     return sum / totalWeights
   }
 
-  mutateCourseGrade(courseIdentifier, gradeType, value) {
+  withCourseGrade(courseIdentifier, gradeType, value) {
 
     let course = this.courses.get(courseIdentifier)
     if (course == null) {
       throw new Error(`identifier=${courseIdentifier} is not present amongst the courses`)
-    } course.grade.set(gradeType, value)
+    }
+
+    course.grade.with(gradeType, value)
 
     let copy = new Semester()
     copy.courses = this.courses

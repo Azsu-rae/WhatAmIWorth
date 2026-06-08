@@ -40,4 +40,8 @@ export class Course {
   weightedGrade() {
     return this.coef * this.grade.compute()
   }
+
+  withGrade(gradeType, value) {
+
+  }
 }

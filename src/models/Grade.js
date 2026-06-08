@@ -1,28 +1,37 @@
 
 import { COURSE_TYPE } from "./Course.js"
 
-function throwIfNull(object) {
-  if (object == null) {
+function throwIfNull(value) {
+  if (value == null) {
     throw new Error("Attempting to compute the grade without passing all of the fields")
-  } return object
+  } return value
 }
 
 export class Grade {
-  constructor(type, { exam, td, tp } = {}) {
+
+  static #token = "somesecret"
+
+  constructor(token, { exam, tp, td, courseType } = {}) {
+
+    if (token !== Grade.#token) {
+      throw new Error("This constructor is private!")
+    }
+
+    this.courseType = courseType
 
     this.exam = exam
     this.tp = tp
     this.td = td
 
-    this.type = type
+    Object.freeze(this)
   }
 
   toString() {
-    return JSON.stringify({ exam: this.exam, tp: this.tp, td: this.td })
+    return JSON.stringify({ courseType: this.courseType, exam: this.exam, tp: this.tp, td: this.td })
   }
 
   compute() {
-    switch (this.type) {
+    switch (this.courseType) {
       case COURSE_TYPE.EXAM_ONLY:
         return throwIfNull(this.exam)
       case COURSE_TYPE.TD:
@@ -34,15 +43,15 @@ export class Grade {
     }
   }
 
-  set(type, value) {
-    if (type === "exam") {
-      this.exam = value
-    } else if (type === "td") {
-      this.td = value
-    } else if (type === "tp") {
-      this.tp = value
+  with(gradeType, value) {
+    if (gradeType === "exam") {
+      return new Grade(this.courseType, { exam: value, td: this.td, tp: this.tp })
+    } else if (gradeType === "td") {
+      return new Grade(this.courseType, { exam: this.exam, td: value, tp: this.tp })
+    } else if (gradeType === "tp") {
+      return new Grade(this.courseType, { exam: this.exam, td: this.td, tp: value })
     } else {
-      throw new Error(`gradeType=${type} is not a valid grade type!`)
+      throw new Error(`gradeType=${gradeType} is not a valid grade type!`)
     }
   }
 }
