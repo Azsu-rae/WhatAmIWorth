@@ -18,7 +18,7 @@ function App() {
   const onChange = (e) => {
     let value = e.target.value === "" ? null : parseFloat(e.target.value)
     let [gradeType, ...identifier] = e.target.id.split("-")
-    setSemester(semester.mutateCourseGrade(identifier.join("-"), gradeType, value))
+    setSemester(semester.withCourseGrade(identifier.join("-"), gradeType, value))
   }
 
   const handleSubmit = (e) => {
