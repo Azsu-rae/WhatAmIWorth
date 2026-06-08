@@ -2,6 +2,12 @@
 
 this is my first React/JavaScript application.
 
+# TODOs
+
+- Elegantly handle comput attempts with empty fields
+- Add some kind of database to handle arbitrary semesters
+- Add a year by year structure
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
