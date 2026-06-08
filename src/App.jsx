@@ -10,7 +10,7 @@ import './App.css'
 function App() {
 
   let [semester, setSemester] = useState(() =>
-    new Semester(courses_data.map(({ name, coef, hasTP, hasTD }) => new Course(name, coef, hasTP, hasTD)))
+    Semester.create(courses_data.map(({ name, coef, hasTP, hasTD }) => Course.create(name, coef, hasTP, hasTD)))
   )
 
   let [average, setAverage] = useState(0.0)
@@ -18,7 +18,7 @@ function App() {
   const onChange = (e) => {
     let value = e.target.value === "" ? null : parseFloat(e.target.value)
     let [gradeType, ...identifier] = e.target.id.split("-")
-    setSemester(semester.mutateCourseGrade(identifier.join("-"), gradeType, value))
+    setSemester(semester.withCourseGrade(identifier.join("-"), gradeType, value))
   }
 
   const handleSubmit = (e) => {

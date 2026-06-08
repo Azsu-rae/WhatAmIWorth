@@ -5,7 +5,7 @@ import { Course } from "../src/models/Course.js";
 import courses_data from "../src/assets/courses.json" with {type: "json"}
 import test_data from "./assets/my_s8.json" with {type: "json"}
 
-let semester = new Semester(courses_data.map(({ name, coef, hasTP, hasTD }) => new Course(name, coef, hasTP, hasTD)))
+let semester = Semester.create(courses_data.map(({ name, coef, hasTP, hasTD }) => Course.create(name, coef, hasTP, hasTD)))
 Object.keys(test_data).forEach(courseIdentifier => {
   Object.keys(test_data[courseIdentifier]).forEach(gradeType => {
     semester.withCourseGrade(courseIdentifier, gradeType, test_data[courseIdentifier][gradeType])

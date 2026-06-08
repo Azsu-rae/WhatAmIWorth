@@ -21,7 +21,14 @@ function type(hasTD, hasTP) {
 }
 
 export class Course {
-  constructor(name, coef, hasTP, hasTD) {
+
+  static #token = "somesecret"
+
+  constructor(token, { name, coef, hasTP, hasTD, grade, identifier }) {
+
+    if (token !== Course.#token) {
+      throw new Error("This constructor is private!")
+    }
 
     this.name = name
     this.coef = coef
@@ -29,8 +36,18 @@ export class Course {
     this.hasTP = hasTP
     this.hasTD = hasTD
 
-    this.grade = new Grade(type(hasTD, hasTP))
-    this.identifier = name.toLowerCase().replaceAll(" ", "_")
+    this.grade = grade ?? Grade.create(type(hasTD, hasTP))
+    this.identifier = identifier ?? name.toLowerCase().replaceAll(" ", "_")
+  }
+
+  static create(name, coef, hasTP, hasTD) {
+    return Object.freeze(new Course(Course.#token, { name, coef, hasTP, hasTD }))
+  }
+
+  with(key, value) {
+    let copy = new Course(Course.#token, this)
+    copy[key] = value
+    return Object.freeze(copy)
   }
 
   toString() {
@@ -39,9 +56,5 @@ export class Course {
 
   weightedGrade() {
     return this.coef * this.grade.compute()
-  }
-
-  withGrade(gradeType, value) {
-
   }
 }
