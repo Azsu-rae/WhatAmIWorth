@@ -4,9 +4,13 @@ this is my first React/JavaScript application.
 
 # TODOs
 
-- Elegantly handle comput attempts with empty fields
-- Add some kind of database to handle arbitrary semesters
+## UX
+- Elegantly handle compute attempts with empty fields
+- Input validation (0 <= grade <= 20)
+
+## Arch
 - Add a year by year structure
+- Add some kind of database to handle arbitrary semesters
 
 # React + Vite
 
