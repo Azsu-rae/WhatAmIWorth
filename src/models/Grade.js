@@ -11,7 +11,7 @@ export class Grade {
 
   static #token = "somesecret"
 
-  constructor(token, { exam, tp, td, courseType } = {}) {
+  constructor(token, { exam, tp, td, courseType }) {
 
     if (token !== Grade.#token) {
       throw new Error("This constructor is private!")
