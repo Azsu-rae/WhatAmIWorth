@@ -8,16 +8,16 @@
     "td": 13
   },
   "optimization_et_métaheuristiques": {
-    "exam": 13.25,
+    "exam": 13.5,
     "tp": 19
   },
   "processus_stochastiques": {
     "exam": 15.5,
-    "td": 16
+    "td": 16.12
   },
   "algorithmique_avancée_et_complexité": {
     "exam": 15.5,
-    "tp": 15
+    "tp": 15.63
   },
   "calcul_haute_performance": {
     "exam": 15,

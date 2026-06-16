@@ -1,7 +1,5 @@
 
-import courses_data from "./assets/courses.json" with { type: "json" }
-import { Semester } from "./models/Semester.js"
-import { Course } from "./models/Course.js"
+import { SemesterRepository } from "./repositories/SemesterRepository.js"
 
 import React, { useState } from 'react'
 
@@ -9,10 +7,7 @@ import './App.css'
 
 function App() {
 
-  let [semester, setSemester] = useState(() =>
-    new Semester(courses_data.map(({ name, coef, hasTP, hasTD }) => new Course(name, coef, hasTP, hasTD)))
-  )
-
+  let [semester, setSemester] = useState(() => SemesterRepository.get("masters", "I2A", 2))
   let [average, setAverage] = useState(0.0)
 
   const onChange = (e) => {

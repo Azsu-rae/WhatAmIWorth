@@ -11,7 +11,7 @@ export class Grade {
 
   static #token = "somesecret"
 
-  constructor(token, { exam, tp, td, courseType } = {}) {
+  constructor(token, { exam, tp, td, courseType }) {
 
     if (token !== Grade.#token) {
       throw new Error("This constructor is private!")
@@ -22,8 +22,16 @@ export class Grade {
     this.exam = exam
     this.tp = tp
     this.td = td
+  }
 
-    Object.freeze(this)
+  static create(courseType) {
+    return Object.freeze(new Grade(Grade.#token, { courseType: courseType }))
+  }
+
+  with(key, value) {
+    let copy = new Grade(Grade.#token, this)
+    copy[key] = value
+    return Object.freeze(copy)
   }
 
   toString() {
@@ -40,18 +48,6 @@ export class Grade {
         return throwIfNull(this.exam) * 0.6 + throwIfNull(this.tp) * 0.4
       case COURSE_TYPE.TD_TP:
         return throwIfNull(this.exam) * 0.6 + ((throwIfNull(this.tp) + throwIfNull(this.td)) / 2) * 0.4
-    }
-  }
-
-  with(gradeType, value) {
-    if (gradeType === "exam") {
-      return new Grade(this.courseType, { exam: value, td: this.td, tp: this.tp })
-    } else if (gradeType === "td") {
-      return new Grade(this.courseType, { exam: this.exam, td: value, tp: this.tp })
-    } else if (gradeType === "tp") {
-      return new Grade(this.courseType, { exam: this.exam, td: this.td, tp: value })
-    } else {
-      throw new Error(`gradeType=${gradeType} is not a valid grade type!`)
     }
   }
 }
