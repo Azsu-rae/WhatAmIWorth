@@ -19,9 +19,9 @@ export class Grade {
 
     this.courseType = courseType
 
-    this.exam = exam
-    this.tp = tp
-    this.td = td
+    this.exam = exam ?? 0.0
+    this.tp = tp ?? 0.0
+    this.td = td ?? 0.0
   }
 
   static create(courseType) {

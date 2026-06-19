@@ -18,11 +18,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    try {
-      setAverage(semester.average())
-    } catch (e) {
-      console.error(e)
-    }
+    setAverage(semester.average())
   }
 
   return (
@@ -40,6 +36,7 @@ function App() {
                 id={`exam-${c.identifier}`}
                 value={c.grade.exam ?? ""}
                 onChange={onChange}
+                required={true}
               />
 
               {(c.hasTP && <>
@@ -50,6 +47,7 @@ function App() {
                   id={`tp-${c.identifier}`}
                   value={c.grade.tp ?? ""}
                   onChange={onChange}
+                  required={true}
                 />
               </>)}
 
@@ -61,6 +59,7 @@ function App() {
                   id={`td-${c.identifier}`}
                   value={c.grade.td ?? ""}
                   onChange={onChange}
+                  required={true}
                 />
               </>)}
             </React.Fragment>
