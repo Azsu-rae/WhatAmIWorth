@@ -5,7 +5,7 @@ this is my first React/JavaScript application.
 # TODOs
 
 ## UX
-- Elegantly handle compute attempts with empty fields
+- Elegantly handle compute attempts with empty fields (DONE)
 - Input validation (0 <= grade <= 20)
 
 ## Arch

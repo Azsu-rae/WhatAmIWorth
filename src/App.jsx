@@ -21,6 +21,13 @@ function App() {
     setAverage(semester.average())
   }
 
+  const onBlur = (e) => {
+    //     let value = e.target.value
+    //     if (value < 0 || value > 20) {
+    //
+    //     }
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -36,6 +43,7 @@ function App() {
                 id={`exam-${c.identifier}`}
                 value={c.grade.exam ?? ""}
                 onChange={onChange}
+                onBlur={onBlur}
                 required={true}
               />
 
