@@ -5,8 +5,12 @@ this is my first React/JavaScript application.
 # TODOs
 
 ## UX
-- Elegantly handle compute attempts with empty fields (DONE)
-- Input validation (0 <= grade <= 20)
+
+### Elegantly handle compute attempts with empty fields (DONE)
+
+it's really all about expressing intent. I have fields such as `hasTD` and `hasTP` and I must use those to infer if a field is required or not but since those live in the `Course` class which doesn not compute the grade, it merely stores informations about it, trimbaling arround boolean values shared between two classes is kidn of confusing and i still need a way to know if a field is required at runtime to when the user clicks the `compute` button. So, the solution is to explicitly pass the knowledge of the type using the `COURSE_TYPE` enumerator
+
+### Input validation (0 <= grade <= 20)
 
 ## Arch
 - Add a year by year structure
